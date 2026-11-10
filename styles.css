@@ -1,0 +1,331 @@
+/* ==========================================================================
+   ASEMANI TRADING — Coming Soon
+   Plain CSS, no external assets. System font stacks only.
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --navy-950: #04070f;
+  --navy-900: #070b1a;
+  --navy-800: #0c1430;
+  --navy-700: #142048;
+  --gold-400: #d4b97a;
+  --gold-500: #c2a263;
+  --gold-600: #9c8150;
+  --ivory-100: #f6f0e3;
+  --ivory-200: #e9e1cf;
+  --ivory-muted: #bdb5a4;
+
+  /* Type */
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+    "URW Palladio L", "Hoefler Text", Baskerville, Georgia, "Times New Roman", serif;
+  --font-sans: "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica,
+    Arial, system-ui, sans-serif;
+
+  /* Motion */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--navy-900);
+  color: var(--ivory-100);
+  font-family: var(--font-serif);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--gold-500); color: var(--navy-900); }
+
+/* --------------------------------------------------------------------------
+   Background: deep cosmic sky
+   -------------------------------------------------------------------------- */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 38%, rgba(20, 32, 72, .9) 0%, rgba(12, 20, 48, .6) 40%, transparent 75%),
+    radial-gradient(ellipse 120% 80% at 50% 120%, rgba(156, 129, 80, .10) 0%, transparent 60%),
+    linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 45%, var(--navy-950) 100%);
+}
+
+/* Two layers of tiny stars drawn with repeating radial gradients */
+.stars {
+  position: absolute;
+  inset: -50%;
+  background-repeat: repeat;
+}
+
+.stars--far {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(246, 240, 227, .55), transparent 60%),
+    radial-gradient(1px 1px at 140px 80px, rgba(246, 240, 227, .35), transparent 60%),
+    radial-gradient(1px 1px at 90px 160px, rgba(246, 240, 227, .45), transparent 60%),
+    radial-gradient(1px 1px at 210px 210px, rgba(246, 240, 227, .3), transparent 60%),
+    radial-gradient(1px 1px at 260px 40px, rgba(246, 240, 227, .4), transparent 60%);
+  background-size: 290px 260px;
+  opacity: .6;
+  animation: drift 240s linear infinite;
+}
+
+.stars--near {
+  background-image:
+    radial-gradient(1.4px 1.4px at 60px 120px, rgba(212, 185, 122, .6), transparent 60%),
+    radial-gradient(1.2px 1.2px at 330px 60px, rgba(246, 240, 227, .55), transparent 60%),
+    radial-gradient(1.6px 1.6px at 220px 340px, rgba(246, 240, 227, .5), transparent 60%),
+    radial-gradient(1.2px 1.2px at 410px 270px, rgba(212, 185, 122, .45), transparent 60%);
+  background-size: 470px 410px;
+  opacity: .7;
+  animation: drift 160s linear infinite reverse, twinkle 7s ease-in-out infinite alternate;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(90vmax, 1100px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(194, 162, 99, .10) 0%, rgba(194, 162, 99, .04) 30%, transparent 62%);
+  animation: breathe 12s ease-in-out infinite alternate;
+}
+
+/* Soft vignette */
+.sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(2, 4, 10, .65) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding:
+    max(3rem, env(safe-area-inset-top))
+    max(1.25rem, env(safe-area-inset-right))
+    2rem
+    max(1.25rem, env(safe-area-inset-left));
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.emblem {
+  width: clamp(72px, 14vw, 104px);
+  height: auto;
+  color: var(--gold-400);
+  overflow: visible;
+}
+
+.emblem__text {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  letter-spacing: 3px;
+  fill: var(--ivory-100);
+}
+
+.emblem__star {
+  transform-origin: 60px 60px;
+  animation: orbit 40s linear infinite;
+}
+
+.brand__name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(.78rem, 1.6vw, .95rem);
+  font-weight: 500;
+  letter-spacing: .42em;
+  /* compensate trailing letter-spacing for optical centering */
+  margin-right: -.42em;
+  color: var(--gold-400);
+  text-transform: uppercase;
+}
+
+/* Decorative divider */
+.rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: clamp(2rem, 5vh, 3rem) 0 clamp(1.5rem, 4vh, 2.25rem);
+}
+
+.rule span {
+  position: relative;
+  display: block;
+  width: clamp(120px, 22vw, 220px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
+}
+
+.rule span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--gold-400);
+  background: var(--navy-900);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Headline */
+.headline {
+  margin: 0;
+  max-width: 18ch;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 7vw, 4.75rem);
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  color: var(--ivory-100);
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(4, 7, 15, .6);
+}
+
+.lede {
+  margin: clamp(1.25rem, 3vh, 1.75rem) 0 0;
+  max-width: 36ch;
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 300;
+  letter-spacing: .02em;
+  color: var(--ivory-200);
+}
+
+.statement {
+  margin: clamp(2.25rem, 6vh, 3.5rem) 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  color: var(--gold-400);
+  letter-spacing: .01em;
+}
+
+.descriptor {
+  margin: clamp(1.5rem, 4vh, 2.25rem) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem .9rem;
+  font-family: var(--font-sans);
+  font-size: clamp(.68rem, 1.3vw, .78rem);
+  font-weight: 500;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--ivory-muted);
+}
+
+.descriptor .sep { color: var(--gold-600); letter-spacing: 0; }
+
+/* Footer */
+.footer {
+  padding: 1.5rem 1.25rem max(1.5rem, env(safe-area-inset-bottom));
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ivory-muted);
+}
+
+.footer p { margin: 0; opacity: .85; }
+
+/* --------------------------------------------------------------------------
+   Small screens
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .brand__name { letter-spacing: .32em; margin-right: -.32em; }
+  .descriptor { flex-direction: column; gap: .55rem; letter-spacing: .24em; }
+  .descriptor .sep { display: none; }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .stage { padding-top: 1.5rem; padding-bottom: 1rem; }
+  .rule { margin: 1.25rem 0 1rem; }
+  .statement { margin-top: 1.25rem; }
+  .descriptor { margin-top: 1rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Motion
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: reveal 1.2s var(--ease) forwards;
+  animation-delay: calc(var(--d, 0) * 160ms + 150ms);
+}
+
+@keyframes reveal { to { opacity: 1; transform: none; } }
+@keyframes drift { to { transform: translate3d(-290px, -130px, 0); } }
+@keyframes twinkle { from { opacity: .45; } to { opacity: .8; } }
+@keyframes breathe {
+  from { opacity: .7; transform: translate(-50%, -50%) scale(.96); }
+  to   { opacity: 1;  transform: translate(-50%, -50%) scale(1.04); }
+}
+@keyframes orbit { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* High-contrast / forced colors: keep content legible */
+@media (forced-colors: active) {
+  .sky { display: none; }
+  .rule span { background: CanvasText; }
+}
+
+/* Print: plain ivory-on-white fallback */
+@media print {
+  .sky { display: none; }
+  body { background: #fff; color: #000; }
+  .reveal { opacity: 1; transform: none; animation: none; }
+  .brand__name, .statement, .emblem { color: #6b5a33; }
+  .emblem__text { fill: #000; }
+}
