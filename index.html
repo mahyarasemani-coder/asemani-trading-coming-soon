@@ -4,23 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ASEMANI TRADING — A New Chapter Is Taking Shape</title>
-  <meta name="description" content="ASEMANI TRADING is preparing its new digital home. International Trade | Engineering | Innovation. For a Better, More Beautiful World.">
-  <meta name="theme-color" content="#070b1a">
-  <meta name="color-scheme" content="dark">
-  <meta name="robots" content="index, follow">
+  <meta name="description" content="ASEMANI TRADING is preparing its new digital home. For a Better, More Beautiful World.">
+  <meta name="theme-color" content="#ece2c6">
+  <meta name="color-scheme" content="light">
   <link rel="canonical" href="https://asemanitrading.com/">
 
   <!-- Open Graph / social -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ASEMANI TRADING">
   <meta property="og:title" content="ASEMANI TRADING — A New Chapter Is Taking Shape">
-  <meta property="og:description" content="We are preparing our new digital home. For a Better, More Beautiful World.">
+  <meta property="og:description" content="ASEMANI TRADING is preparing its new digital home. For a Better, More Beautiful World.">
   <meta property="og:url" content="https://asemanitrading.com/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ASEMANI TRADING — A New Chapter Is Taking Shape">
-  <meta name="twitter:description" content="We are preparing our new digital home. For a Better, More Beautiful World.">
+  <meta name="twitter:description" content="ASEMANI TRADING is preparing its new digital home. For a Better, More Beautiful World.">
 
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Icons: generated from the official A/T monogram (see tools/build-logo.py) -->
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
   <link rel="stylesheet" href="styles.css">
 
   <script type="application/ld+json">
@@ -28,53 +31,38 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "ASEMANI TRADING",
-    "alternateName": "AT",
     "url": "https://asemanitrading.com/",
+    "logo": "https://asemanitrading.com/assets/logo/at-logo-copper.png",
     "slogan": "For a Better, More Beautiful World."
   }
   </script>
+
+  <!-- Keeps preview/staging hosts out of search results; no effect on asemanitrading.com -->
+  <script src="script.js"></script>
 </head>
 <body>
-  <div class="sky" aria-hidden="true">
-    <div class="stars stars--far"></div>
-    <div class="stars stars--near"></div>
-    <div class="glow"></div>
-  </div>
+  <header class="brand">
+    <!-- Decorative here: the brand name follows as text, so alt is empty to avoid a double announcement -->
+    <img class="brand__logo" src="assets/logo/at-logo-copper.png" width="297" height="290" alt="">
+    <p class="brand__name">ASEMANI TRADING</p>
+  </header>
 
-  <main class="stage" id="main">
-    <header class="brand reveal" style="--d: 0">
-      <svg class="emblem" viewBox="0 0 120 120" role="img" aria-labelledby="emblem-title">
-        <title id="emblem-title">ASEMANI TRADING emblem</title>
-        <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="1" opacity=".55"/>
-        <circle cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-width=".6" opacity=".3"/>
-        <ellipse class="emblem__orbit" cx="60" cy="60" rx="56" ry="18" fill="none" stroke="currentColor" stroke-width=".8" opacity=".45" transform="rotate(-24 60 60)"/>
-        <text x="60" y="71" text-anchor="middle" class="emblem__text">AT</text>
-        <circle class="emblem__star" cx="108" cy="38" r="2.2" fill="currentColor"/>
-      </svg>
-      <p class="brand__name">ASEMANI TRADING</p>
-    </header>
+  <main class="stage">
+    <h1 class="headline">A New Chapter Is Taking&nbsp;Shape.</h1>
 
-    <div class="rule reveal" style="--d: 1" aria-hidden="true"><span></span></div>
+    <p class="lede">We are preparing our new digital home.</p>
 
-    <h1 class="headline reveal" style="--d: 2">A New Chapter Is Taking&nbsp;Shape.</h1>
+    <p class="statement">For a Better, More Beautiful World.</p>
 
-    <p class="lede reveal" style="--d: 3">We are preparing our new digital home.</p>
-
-    <p class="statement reveal" style="--d: 4">For a Better, More Beautiful World.</p>
-
-    <p class="descriptor reveal" style="--d: 5">
-      <span>International Trade</span>
-      <span class="sep" aria-hidden="true">|</span>
-      <span>Engineering</span>
-      <span class="sep" aria-hidden="true">|</span>
-      <span>Innovation</span>
-    </p>
+    <ul class="descriptor" role="list">
+      <li>International Trade</li>
+      <li>Engineering</li>
+      <li>Innovation</li>
+    </ul>
   </main>
 
-  <footer class="footer reveal" style="--d: 6">
-    <p>&copy; <span id="year">2026</span> ASEMANI TRADING</p>
+  <footer class="footer">
+    <p>&copy; 2026 ASEMANI TRADING</p>
   </footer>
-
-  <script src="script.js" defer></script>
 </body>
 </html>

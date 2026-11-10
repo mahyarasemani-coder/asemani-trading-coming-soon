@@ -1,29 +1,31 @@
 /* ==========================================================================
    ASEMANI TRADING — Coming Soon
    Plain CSS, no external assets. System font stacks only.
+   Palette: soft champagne ground, warm ivory light, deep brown type,
+   dark copper accents (matching the copper finish of the A/T monogram).
    ========================================================================== */
 
 :root {
-  /* Palette */
-  --navy-950: #04070f;
-  --navy-900: #070b1a;
-  --navy-800: #0c1430;
-  --navy-700: #142048;
-  --gold-400: #d4b97a;
-  --gold-500: #c2a263;
-  --gold-600: #9c8150;
-  --ivory-100: #f6f0e3;
-  --ivory-200: #e9e1cf;
-  --ivory-muted: #bdb5a4;
+  /* Ground */
+  --champagne: #ece2c6;       /* primary background (also in tools/build-logo.py) */
+  --champagne-deep: #e2d5b1;  /* edges */
+  --ivory: #f7f1e1;           /* soft central light */
 
   /* Type */
+  --brown-900: #2f1e12;       /* headline */
+  --brown-700: #4a3323;       /* body */
+  --brown-500: #6a4b35;       /* secondary details */
+
+  /* Accent */
+  --copper-700: #6b3a1f;
+  --copper-500: #8f5530;
+
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
     "URW Palladio L", "Hoefler Text", Baskerville, Georgia, "Times New Roman", serif;
   --font-sans: "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica,
     Arial, system-ui, sans-serif;
 
-  /* Motion */
-  --ease: cubic-bezier(.22, .61, .36, 1);
+  --frame-inset: clamp(.6rem, 2vw, 1.25rem);
 }
 
 *,
@@ -31,94 +33,106 @@
 *::after { box-sizing: border-box; }
 
 html {
-  height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body {
+  position: relative;
   margin: 0;
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  background-color: var(--navy-900);
-  color: var(--ivory-100);
+  align-items: center;
+  text-align: center;
+  padding:
+    max(var(--frame-inset), env(safe-area-inset-top))
+    max(var(--frame-inset), env(safe-area-inset-right))
+    max(var(--frame-inset), env(safe-area-inset-bottom))
+    max(var(--frame-inset), env(safe-area-inset-left));
+  background-color: var(--champagne);
+  background-image:
+    radial-gradient(ellipse 75% 60% at 50% 40%, var(--ivory) 0%, rgba(247, 241, 225, 0) 70%),
+    linear-gradient(180deg, var(--champagne) 0%, var(--champagne) 55%, var(--champagne-deep) 100%);
+  color: var(--brown-700);
   font-family: var(--font-serif);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
-::selection { background: var(--gold-500); color: var(--navy-900); }
-
-/* --------------------------------------------------------------------------
-   Background: deep cosmic sky
-   -------------------------------------------------------------------------- */
-
-.sky {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 38%, rgba(20, 32, 72, .9) 0%, rgba(12, 20, 48, .6) 40%, transparent 75%),
-    radial-gradient(ellipse 120% 80% at 50% 120%, rgba(156, 129, 80, .10) 0%, transparent 60%),
-    linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 45%, var(--navy-950) 100%);
-}
-
-/* Two layers of tiny stars drawn with repeating radial gradients */
-.stars {
-  position: absolute;
-  inset: -50%;
-  background-repeat: repeat;
-}
-
-.stars--far {
-  background-image:
-    radial-gradient(1px 1px at 20px 30px, rgba(246, 240, 227, .55), transparent 60%),
-    radial-gradient(1px 1px at 140px 80px, rgba(246, 240, 227, .35), transparent 60%),
-    radial-gradient(1px 1px at 90px 160px, rgba(246, 240, 227, .45), transparent 60%),
-    radial-gradient(1px 1px at 210px 210px, rgba(246, 240, 227, .3), transparent 60%),
-    radial-gradient(1px 1px at 260px 40px, rgba(246, 240, 227, .4), transparent 60%);
-  background-size: 290px 260px;
-  opacity: .6;
-  animation: drift 240s linear infinite;
-}
-
-.stars--near {
-  background-image:
-    radial-gradient(1.4px 1.4px at 60px 120px, rgba(212, 185, 122, .6), transparent 60%),
-    radial-gradient(1.2px 1.2px at 330px 60px, rgba(246, 240, 227, .55), transparent 60%),
-    radial-gradient(1.6px 1.6px at 220px 340px, rgba(246, 240, 227, .5), transparent 60%),
-    radial-gradient(1.2px 1.2px at 410px 270px, rgba(212, 185, 122, .45), transparent 60%);
-  background-size: 470px 410px;
-  opacity: .7;
-  animation: drift 160s linear infinite reverse, twinkle 7s ease-in-out infinite alternate;
-}
-
-.glow {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  width: min(90vmax, 1100px);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(194, 162, 99, .10) 0%, rgba(194, 162, 99, .04) 30%, transparent 62%);
-  animation: breathe 12s ease-in-out infinite alternate;
-}
-
-/* Soft vignette */
-.sky::after {
+/* Fine copper keyline around the page */
+body::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 55%, rgba(2, 4, 10, .65) 100%);
+  inset: var(--frame-inset);
+  border: 1px solid rgba(107, 58, 31, .28);
+  pointer-events: none;
+}
+
+::selection { background: var(--copper-700); color: var(--ivory); }
+
+:focus-visible {
+  outline: 2px solid var(--copper-700);
+  outline-offset: 3px;
 }
 
 /* --------------------------------------------------------------------------
-   Layout
+   Brand
+   -------------------------------------------------------------------------- */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: clamp(2.5rem, 9vh, 5.5rem) 1.25rem 0;
+}
+
+/* Official A/T monogram. Source is 297x290 px: keep the display size at or
+   below ~130 CSS px so it stays sharp on high-density screens. */
+.brand__logo {
+  display: block;
+  width: clamp(84px, 15vw, 124px);
+  height: auto;
+}
+
+.brand__name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(.8rem, 1.6vw, .95rem);
+  font-weight: 600;
+  letter-spacing: .42em;
+  /* cancel the trailing letter-space so the name is optically centred */
+  margin-right: -.42em;
+  color: var(--copper-700);
+}
+
+/* Copper rule with a small diamond, drawn in CSS (not in the document) */
+.brand { position: relative; }
+
+.brand::after {
+  content: "";
+  width: clamp(120px, 22vw, 220px);
+  height: 9px;
+  margin-top: clamp(.75rem, 3vh, 1.75rem);
+  background: linear-gradient(90deg, transparent, var(--copper-500) 30%, transparent 45%, transparent 55%, var(--copper-500) 70%, transparent) center / 100% 1px no-repeat;
+}
+
+.brand::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 1.5px;
+  width: 6px;
+  height: 6px;
+  background: var(--copper-500);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Content
    -------------------------------------------------------------------------- */
 
 .stage {
@@ -126,206 +140,122 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding:
-    max(3rem, env(safe-area-inset-top))
-    max(1.25rem, env(safe-area-inset-right))
-    2rem
-    max(1.25rem, env(safe-area-inset-left));
   width: 100%;
   max-width: 64rem;
-  margin: 0 auto;
+  padding: clamp(1.5rem, 4vh, 2.5rem) 1.25rem 2rem;
 }
 
-/* Brand */
-.brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.1rem;
-}
-
-.emblem {
-  width: clamp(72px, 14vw, 104px);
-  height: auto;
-  color: var(--gold-400);
-  overflow: visible;
-}
-
-.emblem__text {
-  font-family: var(--font-serif);
-  font-size: 32px;
-  letter-spacing: 3px;
-  fill: var(--ivory-100);
-}
-
-.emblem__star {
-  transform-origin: 60px 60px;
-  animation: orbit 40s linear infinite;
-}
-
-.brand__name {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: clamp(.78rem, 1.6vw, .95rem);
-  font-weight: 500;
-  letter-spacing: .42em;
-  /* compensate trailing letter-spacing for optical centering */
-  margin-right: -.42em;
-  color: var(--gold-400);
-  text-transform: uppercase;
-}
-
-/* Decorative divider */
-.rule {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: clamp(2rem, 5vh, 3rem) 0 clamp(1.5rem, 4vh, 2.25rem);
-}
-
-.rule span {
-  position: relative;
-  display: block;
-  width: clamp(120px, 22vw, 220px);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
-}
-
-.rule span::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  border: 1px solid var(--gold-400);
-  background: var(--navy-900);
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-/* Headline */
 .headline {
   margin: 0;
   max-width: 18ch;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(2.25rem, 7vw, 4.75rem);
-  line-height: 1.08;
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
+  line-height: 1.1;
   letter-spacing: -.01em;
-  color: var(--ivory-100);
+  color: var(--brown-900);
   text-wrap: balance;
-  text-shadow: 0 2px 30px rgba(4, 7, 15, .6);
 }
 
 .lede {
-  margin: clamp(1.25rem, 3vh, 1.75rem) 0 0;
+  margin: clamp(1.1rem, 3vh, 1.6rem) 0 0;
   max-width: 36ch;
   font-family: var(--font-sans);
   font-size: clamp(1rem, 2vw, 1.2rem);
-  font-weight: 300;
   letter-spacing: .02em;
-  color: var(--ivory-200);
+  color: var(--brown-700);
 }
 
 .statement {
-  margin: clamp(2.25rem, 6vh, 3.5rem) 0 0;
+  margin: clamp(2rem, 6vh, 3.25rem) 0 0;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
-  color: var(--gold-400);
-  letter-spacing: .01em;
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  color: var(--copper-700);
 }
 
 .descriptor {
-  margin: clamp(1.5rem, 4vh, 2.25rem) 0 0;
+  margin: clamp(1.4rem, 4vh, 2.1rem) 0 0;
+  padding: 0;
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: .4rem .9rem;
   font-family: var(--font-sans);
-  font-size: clamp(.68rem, 1.3vw, .78rem);
-  font-weight: 500;
-  letter-spacing: .28em;
+  font-size: clamp(.7rem, 1.3vw, .8rem);
+  font-weight: 600;
+  letter-spacing: .26em;
   text-transform: uppercase;
-  color: var(--ivory-muted);
+  color: var(--brown-500);
 }
 
-.descriptor .sep { color: var(--gold-600); letter-spacing: 0; }
+.descriptor li { padding: .2rem 0 .2rem .26em; }
 
-/* Footer */
+/* Visual separators only; assistive technology reads three list items */
+.descriptor li + li {
+  margin-left: 1rem;
+  padding-left: calc(1rem + .26em);
+  border-left: 1px solid rgba(107, 58, 31, .55);
+}
+
 .footer {
-  padding: 1.5rem 1.25rem max(1.5rem, env(safe-area-inset-bottom));
-  text-align: center;
+  padding: 1rem 1.25rem clamp(1.5rem, 4vh, 2.25rem);
   font-family: var(--font-sans);
-  font-size: .72rem;
+  font-size: .75rem;
   letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--ivory-muted);
+  color: var(--brown-500);
 }
 
-.footer p { margin: 0; opacity: .85; }
+.footer p { margin: 0; }
 
 /* --------------------------------------------------------------------------
-   Small screens
+   Small and short screens
    -------------------------------------------------------------------------- */
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   .brand__name { letter-spacing: .32em; margin-right: -.32em; }
-  .descriptor { flex-direction: column; gap: .55rem; letter-spacing: .24em; }
-  .descriptor .sep { display: none; }
+  .descriptor { flex-direction: column; gap: .35rem; }
+  .descriptor li + li { margin-left: 0; padding-left: .26em; border-left: 0; }
 }
 
 @media (max-height: 560px) and (orientation: landscape) {
-  .stage { padding-top: 1.5rem; padding-bottom: 1rem; }
-  .rule { margin: 1.25rem 0 1rem; }
+  .brand { padding-top: 1.75rem; gap: .9rem; }
   .statement { margin-top: 1.25rem; }
   .descriptor { margin-top: 1rem; }
 }
 
 /* --------------------------------------------------------------------------
-   Motion
+   Preferences and output
    -------------------------------------------------------------------------- */
 
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  animation: reveal 1.2s var(--ease) forwards;
-  animation-delay: calc(var(--d, 0) * 160ms + 150ms);
-}
-
-@keyframes reveal { to { opacity: 1; transform: none; } }
-@keyframes drift { to { transform: translate3d(-290px, -130px, 0); } }
-@keyframes twinkle { from { opacity: .45; } to { opacity: .8; } }
-@keyframes breathe {
-  from { opacity: .7; transform: translate(-50%, -50%) scale(.96); }
-  to   { opacity: 1;  transform: translate(-50%, -50%) scale(1.04); }
-}
-@keyframes orbit { to { transform: rotate(360deg); } }
-
+/* The page has no animation. This guard keeps it that way if any is added. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation: none !important;
     transition: none !important;
+    scroll-behavior: auto !important;
   }
-  .reveal { opacity: 1; transform: none; }
 }
 
-/* High-contrast / forced colors: keep content legible */
+/* Forced colours (e.g. Windows High Contrast): rely on system colours */
 @media (forced-colors: active) {
-  .sky { display: none; }
-  .rule span { background: CanvasText; }
+  body { background-image: none; }
+  body::before { border-color: CanvasText; }
+  .brand::after { background: CanvasText; height: 1px; }
+  .brand::before { display: none; }
+  .descriptor li + li { border-left-color: CanvasText; }
 }
 
-/* Print: plain ivory-on-white fallback */
 @media print {
-  .sky { display: none; }
-  body { background: #fff; color: #000; }
-  .reveal { opacity: 1; transform: none; animation: none; }
-  .brand__name, .statement, .emblem { color: #6b5a33; }
-  .emblem__text { fill: #000; }
+  body {
+    min-height: 0;
+    background: #fff;
+    color: #000;
+  }
+  body::before { display: none; }
+  .headline, .lede, .footer, .descriptor { color: #000; }
+  .brand__name, .statement { color: #4a2814; }
+  .brand__logo { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
